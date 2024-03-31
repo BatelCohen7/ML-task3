@@ -33,7 +33,7 @@ def evaluate_knn(X_train, X_test, y_train, y_test, k_values, distance_metrics):
 
 # Main experiment
 k_values = [1, 3, 5, 7, 9]
-distance_metrics = {'manhattan_distance': 1, 'euclidean_distance': 2, 'frechet_distance': np.inf}
+distance_metrics = {'manhattan_distance': 1, 'euclidean_distance': 2, 'chebyshev_distance': np.inf}
 n_trials = 100
 
 # Initialize results storage
@@ -69,12 +69,24 @@ for metric in distance_metrics:
     metric_data = [d for i, d in enumerate(plot_data['metric']) if d == metric]
     train_errors = [plot_data['train_error'][i] for i, d in enumerate(plot_data['metric']) if d == metric]
     test_errors = [plot_data['test_error'][i] for i, d in enumerate(plot_data['metric']) if d == metric]
-    ax.plot(k_values, train_errors, marker='o', linestyle='-', label=f'Train Error, {metric}')
-    ax.plot(k_values, test_errors, marker='x', linestyle='--', label=f'Test Error, {metric}')
+    ax.plot(k_values, train_errors, marker='o', linestyle='-', label=f'Train Error - {metric}')
+    ax.plot(k_values, test_errors, marker='x', linestyle='--', label=f'Test Error - {metric}')
 
 ax.set_xlabel('Number of Neighbors (k)')
 ax.set_ylabel('Error')
 ax.set_title('k-NN Classifier Errors for Different k and Distance Metrics')
 ax.legend()
 
-plt.show()
+plt.show(block=False)
+
+# Print formatted results after the plot
+print("KNN Classification Results:")
+print("---------------------------------\n")
+for k in k_values:
+    for metric in distance_metrics.keys():
+        idx = plot_data['metric'].index(metric) + plot_data['k'].index(k)
+        train_error = plot_data['train_error'][idx]
+        test_error = plot_data['test_error'][idx]
+        print(f"Results for k={k}, using {metric.replace('_', ' ')}:")
+        print(f"    Average Empirical Error: {train_error:.3f}")
+        print(f"    Average True Error: {test_error:.3f}\n")
