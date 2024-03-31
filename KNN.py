@@ -64,6 +64,7 @@ for result in average_results:
 print("Average Results:")
 for result in average_results:
     print(f"k: {result['k']}, p: {result['p']}, Train Error: {result['train_error']}, Test Error: {result['test_error']}")
+    
 # Save results to an Excel file
 df_results = pd.DataFrame(average_results)
 df_results.to_excel('results.xlsx', index=False)
