@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 # Load the Haberman's Survival dataset
-df = pd.read_csv('/mnt/data/haberman.csv', header=None)
+df = pd.read_csv('haberman.csv', header=None)
 X = df.iloc[:, :-1].values  # Features
 y = df.iloc[:, -1].values   # Labels
 
